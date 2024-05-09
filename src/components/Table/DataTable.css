@@ -1,0 +1,27 @@
+.edit-field {
+    border: none; 
+}
+
+.dbl-tick {
+    color: #0ac50a !important;
+}
+
+.verify{
+    cursor:pointer;
+    pointer-events: auto;
+
+}
+
+.p-datatable-thead > tr {
+    background: black !important;
+}
+.p-datatable .p-datatable-thead > tr > th {
+    background-color: #ff5000;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
+    background-color: #ff5000;
+    color: white;
+}

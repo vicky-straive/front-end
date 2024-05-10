@@ -50,7 +50,7 @@ export const ProductService = {
                 price: 29,
                 category: 'Clothing',
                 quantity: 25,
-                inventoryStatus: 'MODIFIED',
+                inventoryStatus: 'NOT MODIFIED',
                 rating: 5
             },
             {
@@ -63,7 +63,7 @@ export const ProductService = {
                 price: 15,
                 category: 'Accessories',
                 quantity: 73,
-                inventoryStatus: 'MODIFIED',
+                inventoryStatus: 'NOT MODIFIED',
                 rating: 4
             },
             {

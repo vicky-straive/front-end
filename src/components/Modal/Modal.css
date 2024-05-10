@@ -1,0 +1,64 @@
+.p-inputtextarea-resizable {
+  width: 100%;
+}
+
+.db-box{
+  width: auto !important;
+  height: auto !important;
+}
+
+.p-dialog .p-dialog-header {
+  border-bottom: 0 none;
+  /* background: #ff5000; */
+  color: rgba(255, 255, 255, 0.87);
+  padding: 1rem;
+  border-top-right-radius: 6px;
+  border-bottom: 2px solid #272d34;
+  margin: 1px;
+}
+
+.p-button {
+  font-size: 1rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+    box-shadow 0.2s;
+  border-radius: 35px;
+}
+
+.db-content {
+  display: flex;
+}
+
+.db-sl {
+  width: 100%;
+  margin: 10px 0px auto 0px;
+}
+
+.db-ml {
+  width: 100%;
+  margin: 0px 10px auto 50px;
+}
+
+.edit-icon {
+  color: black;
+  background: #ffffff;
+  border: 1px solid #000000;
+}
+
+.edit-icon:hover {
+  color: rgb(255, 255, 255);
+  background: #000000;
+  border: 1px solid #000000;
+}
+
+.db-confirm-btn:hover {
+    background: #22c55e;
+    color: #0d0d0d;
+  
+}
+
+.db-footer{
+  position: sticky;
+  margin-top: 2em;
+  display: flex;
+  justify-content: end;
+}

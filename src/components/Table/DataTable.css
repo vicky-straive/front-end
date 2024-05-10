@@ -19,9 +19,14 @@
     background-color: #ff5000;
     color: rgb(255, 255, 255);
     font-weight: 700;
+    backdrop-filter: blur(8px);
 }
 
 .p-paginator .p-paginator-pages .p-paginator-page.p-highlight{
     background-color: #ff5000;
     color: white;
+}
+
+.db-table{
+    width: 100%;
 }

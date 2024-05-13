@@ -3,6 +3,8 @@ import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { Button } from "primereact/button";
 import { useSessionStorage } from 'primereact/hooks';
+import { Link } from "react-router-dom";
+
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "/node_modules/primeflex/primeflex.css";
@@ -57,10 +59,10 @@ function LoginComponent(props) {
                 SME-Review
               </div>
               <span className="text-600 font-medium line-height-3">
-                Srtive Employee?
+              Srtive Employee? 
               </span>
               <a className="font-medium no-underline ml-2 text-blue-500 cursor-pointer srtive">
-                Login here!
+              <Link className='link' to="/prime-table">Login here!</Link>
               </a>
             </div>
 

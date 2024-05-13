@@ -9,10 +9,15 @@
   /* border-radius: 15px !important; */
 }
 
+.link{
+  color: #ff5100fb;
+    text-decoration: none;
+}
+
 .input-field:focus{
     outline: 0 none;
     outline-offset: 0;
-    box-shadow: 0 0 0 0.2rem #ff5100fb;
+    box-shadow: 0 0 0 0.1rem #ff5100fb;
     border-color: #ffffff;
 }
 

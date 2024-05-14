@@ -16,8 +16,6 @@ export const msalConfig = {
         clientId: "902561d4-595a-495f-b50b-b88d86deed78",
         authority: "https://login.microsoftonline.com/2ed42162-0b0a-4972-b5e1-1c6006bd8df4",
         redirectUri: "http://localhost/sme-review/login/with-o365",
-        // redirectUri: "http://localhost/sme-review/callback",
-        // redirectUri: "https://10.93.10.186/SME-Review  ",
     },
     cache: {
         cacheLocation: "sessionStorage", // This configures where your cache will be stored

@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { Button } from "primereact/button";
 import { useSessionStorage } from "primereact/hooks";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Toast } from "primereact/toast";
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 import "./logIn.css";
 
 import axios from "axios";
-import Auth from "../components/Table/loginAuth";
+import atob from "atob";
+import { useMountEffect } from "primereact/hooks";
 
 function LoginComponent(props) {
   const [email, setEmail] = useState("");
@@ -21,71 +23,82 @@ function LoginComponent(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState();
   const [token, setToken] = useSessionStorage("", "token");
-  const [error, setError] = useState(null); // State for error handling
+  const [error, setError] = useState(null); 
+  const msgs = useRef(null);
+  const toast = useRef(null);
+  const [userName, setUserName] = useState(null)
 
   const url = window.location.href.split("?")[1];
-
-  // console.log("url", url);
-
+  const urlParams = new URLSearchParams(url);
   const navigate = useNavigate();
-  // const redirectToMSauth = () => {
-  //   window.location.href = "http://localhost/sme-review/login/with-o365"; // Redirect to Google using full URL
-  //   setToken(url);
-  //   handlePostCall();
-  // };
+  console.log("url", url);
 
-  const handlePostCall = async (event) => {
-    setIsLoading(true); // Set loading indicator
-    setError(null); // Clear any previous errors
+  const getToken = () => {
+    window.location.href = "http://localhost/sme-review/login/with-o365";
+    setToken(url);
+    handlePostCall();
+  };
 
-    console.log("Token", token);
+  const showSuccess = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Login Success",
+      detail: `Welcome ${userName}`,
+      life: 3000,
+    });
+  };
 
+  const handlePostCall = async (token) => {
+    console.log("TOKEN", token);
     try {
       const formData = new FormData();
-      formData.append("accessToken", token);
-      window.location.href = "http://localhost/sme-review/login/with-o365"; // Redirect to Google using full URL
-      setToken(url);
-
-      const apiUrl = "http://127.0.0.1:8000/api/azure-level"; // Adjust URL if needed
-
+      const apiUrl = "http://127.0.0.1:8000/api/azure-level";
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
           Authorization: `Bearer ${token}`,
         },
       });
-      event.preventDefault();
+      formData.append("accessToken", token);
+      console.log("API response:", response.status);
 
-      console.log("API response:", response.data); // Handle successful response
-      // Handle the response data here, potentially updating state or navigating
-      if (response.data.status_code === 200) {
-        // Process successful login
-        const userID = response.data.data.user.user_id;
-        const redirectURL = response.data.data.user.roles[0].redirect_url;
-
-        // Handle user data (e.g., localStorage, state)
-        // ... your logic here ...
-
-        navigate("/dashboard");
+      if (response.status === 200) {
+        console.log("Sucess", response);
+        const name = response.data.name
+        setUserName(name)
+        console.log("Name", name);
+        showSuccess();
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 3000);
       } else {
-        // Handle failed login attempts
-        console.error("Login failed:", response.data);
-        alert("login Failed");
-        navigate('/user-failed')
-
-        setError("Login failed. Please check your credentials."); // Set error message
+        console.error("Login failed:", response);
+        // alert("login Failed");
+        setError("Login failed. Please check your credentials.");
       }
     } catch (error) {
       console.error("Error making API call:", error);
       alert("API err");
-      setError("An error occurred. Please try again later."); // Set generic error message
+      setLoginError("Error making API call");
+      setError("An error occurred. Please try again later.");
     } finally {
-      setIsLoading(false); // Clear loading indicator
-      navigate("/welcome");
-      alert("redirect");
+      setIsLoading(false);
     }
-    // redirectToMSauth()
   };
+
+  useEffect(() => {
+    const newArr = [];
+    for (const [key] of urlParams) {
+      newArr.push(atob(key));
+    }
+    if (newArr[0] != null) {
+      localStorage.setItem("token", newArr[0]);
+      handlePostCall(newArr[0]);
+      if (newArr[0] != null) {
+        console.log("new", newArr);
+      }
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -102,7 +115,6 @@ function LoginComponent(props) {
       );
 
       console.log("Login successful:", response.data);
-      // console.log("Token data:", response.data.token);
       setlogincred(response.data);
       setToken(response.data.token);
       if (props.onLoginSuccess) {
@@ -110,7 +122,10 @@ function LoginComponent(props) {
         navigate("/prime-table");
       }
     } catch (error) {
-      setLoginError(error.response?.data?.message || "Login failed");
+      setLoginError(
+        error.response?.data?.message ||
+          "An error occurred during login. Please try again."
+      );
     } finally {
       setIsLoading(false);
     }
@@ -130,7 +145,7 @@ function LoginComponent(props) {
                 Srtive Employee?
               </span>
               <a className="font-medium no-underline ml-2 text-blue-500 cursor-pointer srtive">
-                <Link className="link" onClick={handlePostCall}>
+                <Link className="link" onClick={getToken}>
                   Click here!
                 </Link>
               </a>
@@ -188,13 +203,22 @@ function LoginComponent(props) {
                 label="Sign In"
                 icon="pi pi-user"
                 className="w-full sub-btn"
+                loading={isLoading}
+                disabled={isLoading}
               />
-              <Auth />
             </div>
           </div>
         </div>
       </form>
+      <div className="card flex justify-content-center">
+        <Toast ref={toast} />
+      </div>
+      {/* {loginError && (
+          <Messages ref={msgs}>
+            <Messages severity="error" content={loginError} />
+          </Messages>
+        )} */}
     </div>
-  )
+  );
 }
 export default LoginComponent;

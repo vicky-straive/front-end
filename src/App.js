@@ -2,9 +2,8 @@ import "./App.css";
 import "./reportWebVitals";
 import React, { useState, useEffect } from "react";
 import PrimeTable from "./components/Table/PrimeTable";
-import LoginComponent from "./components/loginComponent";
+import LoginComponent from "./components/LoginComponent";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Auth from "./components/Table/loginAuth";
 import Welcome from "./components/Welcome";
 
 function App() {
@@ -31,10 +30,6 @@ function App() {
         <Routes>
         <Route
             path="/"
-            element={<LoginComponent onLoginSuccess={handleLoginSuccess} />}
-          />
-          <Route
-            path="/loginAuth"
             element={<LoginComponent onLoginSuccess={handleLoginSuccess} />}
           />
           <Route path="/prime-table" element={<PrimeTable />} />

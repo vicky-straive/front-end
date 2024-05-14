@@ -7,6 +7,7 @@ import { Tag } from "primereact/tag";
 import { ProductService } from "../../Service/ProductService";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "./DataTable.css";
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 // import Modal from "../Modal/Modal";
 
 export default function RowEditingDemo() {
@@ -74,16 +75,11 @@ export default function RowEditingDemo() {
     );
   };
 
-  // const modalTemplate = (rowData) => {
-  //   console.log("row", rowData);
-  //   return (
-  //     <div>
-  //       {isModalOpen && (
-  //         <Modal data={rowData} onClose={() => setIsModalOpen(false)} />
-  //       )}
-  //     </div>
-  //   );
-  // };
+  const pdfViewer = (rowData) => {
+    return(
+      <div><PictureAsPdfIcon/></div>
+    )
+  }
 
   return (
     <div className="card p-fluid db-table">
@@ -101,7 +97,7 @@ export default function RowEditingDemo() {
         onRowEditComplete={onRowEditComplete}
         tableStyle={{ minWidth: "50rem", maxWidth: "100%" }}
       >
-        <Column field="id" header="Node ID" style={{ width: "10%" }}></Column>
+        <Column field="id" header="Page No" style={{ width: "10%" }}></Column>
         <Column
           field="sourceLanguage"
           header="Source Content"
@@ -125,7 +121,13 @@ export default function RowEditingDemo() {
           field="inventoryStatus"
           header="Status"
           body={statusBodyTemplate}
-          style={{ width: "20%" }}
+          style={{ width: "0%" }}
+        ></Column>
+         <Column
+          header="PDF View"
+          body={pdfViewer}
+          headerStyle={{ width: "0%", minWidth: "8rem" }}
+            bodyStyle={{ textAlign: "center" }}
         ></Column>
       </DataTable>
     </div>

@@ -4,21 +4,21 @@ import { Column } from "primereact/column";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dropdown } from "primereact/dropdown";
 import { Tag } from "primereact/tag";
-import { ProductService } from "../../Service/ProductService";
+import { ProductService } from "../../Service/DataService";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "./DataTable.css";
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 // import Modal from "../Modal/Modal";
 
 export default function RowEditingDemo() {
   const [products, setProducts] = useState(null);
   // const [statuses] = useState(["MODIFIED", "NOT MODIFIED"]);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-  const [selectedRow, setSelectedRow] = useState(null); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   useEffect(() => {
     ProductService.getProductsMini().then((data) => setProducts(data));
-  }, []); 
+  }, []);
 
   const allowEdit = (rowData) => {
     if (rowData) {
@@ -44,17 +44,17 @@ export default function RowEditingDemo() {
   const onRowEditComplete = (e) => {
     let _products = [...products];
     let { newData, index } = e;
-  
+
     // Compare the original content with the modified content
     if (_products[index].machineLanguage !== newData.machineLanguage) {
-      newData.inventoryStatus = "MODIFIED"; 
+      newData.inventoryStatus = "MODIFIED";
     } else {
-      newData.inventoryStatus = "NOT MODIFIED"; 
+      newData.inventoryStatus = "NOT MODIFIED";
     }
     _products[index] = newData;
     setProducts(_products);
   };
-  
+
   const textEditor = (options) => {
     return (
       <InputTextarea
@@ -76,10 +76,12 @@ export default function RowEditingDemo() {
   };
 
   const pdfViewer = (rowData) => {
-    return(
-      <div><PictureAsPdfIcon/></div>
-    )
-  }
+    return (
+      <div>
+        <PictureAsPdfIcon />
+      </div>
+    );
+  };
 
   return (
     <div className="card p-fluid db-table">
@@ -114,7 +116,7 @@ export default function RowEditingDemo() {
           rowEditor={allowEdit}
           // body={modalTemplate}
           headerStyle={{ width: "10%", minWidth: "8rem" }}
-            bodyStyle={{ textAlign: "center" }}
+          bodyStyle={{ textAlign: "center" }}
         ></Column>
         <Column
           headerStyle={{ width: "10%", minWidth: "8rem" }}
@@ -123,11 +125,11 @@ export default function RowEditingDemo() {
           body={statusBodyTemplate}
           style={{ width: "0%" }}
         ></Column>
-         <Column
+        <Column
           header="PDF View"
           body={pdfViewer}
           headerStyle={{ width: "0%", minWidth: "8rem" }}
-            bodyStyle={{ textAlign: "center" }}
+          bodyStyle={{ textAlign: "center" }}
         ></Column>
       </DataTable>
     </div>

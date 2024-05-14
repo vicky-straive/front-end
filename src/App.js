@@ -2,9 +2,9 @@ import "./App.css";
 import "./reportWebVitals";
 import React, { useState, useEffect } from "react";
 import PrimeTable from "./components/Table/PrimeTable";
-import LoginComponent from "./components/LoginComponent";
+import LoginComponent from "./Layouts/Login/LoginComponent";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Welcome from "./components/Welcome";
+import Welcome from "./Layouts/Dashboard/Welcome";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);

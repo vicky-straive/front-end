@@ -13,7 +13,6 @@ import "./logIn.css";
 
 import axios from "axios";
 import atob from "atob";
-import { useMountEffect } from "primereact/hooks";
 
 function LoginComponent(props) {
   const [email, setEmail] = useState("");
@@ -26,12 +25,14 @@ function LoginComponent(props) {
   const [error, setError] = useState(null); 
   const msgs = useRef(null);
   const toast = useRef(null);
-  const [userName, setUserName] = useState(null)
+  const [userName, setUserName] = useState()
+
+  console.log("user", userName);
 
   const url = window.location.href.split("?")[1];
   const urlParams = new URLSearchParams(url);
   const navigate = useNavigate();
-  console.log("url", url);
+  // console.log("url", url);
 
   const getToken = () => {
     window.location.href = "http://localhost/sme-review/login/with-o365";
@@ -39,17 +40,17 @@ function LoginComponent(props) {
     handlePostCall();
   };
 
-  const showSuccess = () => {
+  const showSuccess = (name) => {
     toast.current.show({
       severity: "success",
       summary: "Login Success",
-      detail: `Welcome ${userName}`,
+      detail: `Welcome ${name}`,
       life: 3000,
     });
   };
 
   const handlePostCall = async (token) => {
-    console.log("TOKEN", token);
+    // console.log("TOKEN", token);
     try {
       const formData = new FormData();
       const apiUrl = "http://127.0.0.1:8000/api/azure-level";
@@ -60,17 +61,15 @@ function LoginComponent(props) {
         },
       });
       formData.append("accessToken", token);
-      console.log("API response:", response.status);
+      // console.log("API response:", response.status);
 
       if (response.status === 200) {
-        console.log("Sucess", response);
         const name = response.data.name
         setUserName(name)
-        console.log("Name", name);
-        showSuccess();
+        showSuccess(name);
         setTimeout(() => {
-          navigate("/dashboard");
-        }, 3000);
+          navigate("/prime-table");
+        }, 2000);
       } else {
         console.error("Login failed:", response);
         // alert("login Failed");
@@ -95,7 +94,8 @@ function LoginComponent(props) {
       localStorage.setItem("token", newArr[0]);
       handlePostCall(newArr[0]);
       if (newArr[0] != null) {
-        console.log("new", newArr);
+        // console.log("new", newArr);
+        console.log("Eff", userName);
       }
     }
   }, []);

@@ -77,7 +77,7 @@ function LoginComponent(props) {
       }
     } catch (error) {
       console.error("Error making API call:", error);
-      alert("API err");
+      // alert("API err");
       setLoginError("Error making API call");
       setError("An error occurred. Please try again later.");
     } finally {

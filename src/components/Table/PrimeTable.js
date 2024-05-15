@@ -6,8 +6,10 @@ import { Dropdown } from "primereact/dropdown";
 import { Tag } from "primereact/tag";
 import { ProductService } from "../../Service/DataService";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import "primeicons/primeicons.css";
 import "./DataTable.css";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { useRowEditingState } from "primereact/hooks";
 // import Modal from "../Modal/Modal";
 
 export default function RowEditingDemo() {
@@ -15,6 +17,7 @@ export default function RowEditingDemo() {
   // const [statuses] = useState(["MODIFIED", "NOT MODIFIED"]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [rowEditorState, setRowEditorState] = useState(null);
 
   useEffect(() => {
     ProductService.getProductsMini().then((data) => setProducts(data));
@@ -23,7 +26,6 @@ export default function RowEditingDemo() {
   const allowEdit = (rowData) => {
     if (rowData) {
       setSelectedRow(rowData);
-      setIsModalOpen(true);
     }
     return rowData.name !== " Band";
   };
@@ -66,6 +68,21 @@ export default function RowEditingDemo() {
     );
   };
 
+  const checker = (rowData) => {
+     const isRowEditing = rowData === rowEditorState;
+    return (
+      <div>
+        {!isRowEditing && rowData.inventoryStatus === "MODIFIED" && (
+          <i
+            className="pi pi-check"
+            style={{ color: "#0ac50a", position: "relative", right: "80px" }}
+          ></i>
+        )}
+        <i className=""></i>
+      </div>
+    );
+  };
+
   const statusBodyTemplate = (rowData) => {
     return (
       <Tag
@@ -92,43 +109,43 @@ export default function RowEditingDemo() {
         rows={10}
         paginator
         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} pages"
         rowsPerPageOptions={[10, 25, 50]}
         editMode="row"
         dataKey="id"
         onRowEditComplete={onRowEditComplete}
         tableStyle={{ minWidth: "50rem", maxWidth: "100%" }}
+        onRowEditInit={(event) => setRowEditorState(event.data)}
+        onRowEditCancel={() => setRowEditorState(null)}
+        // ...
       >
-        <Column field="id" header="Page No" style={{ width: "10%" }}></Column>
+        {/* <Column field="id" header="Page No" style={{ width: "0%" }}></Column> */}
         <Column
           field="sourceLanguage"
           header="Source Content"
-          style={{ width: "30%" }}
+          style={{ width: "20%" }}
         ></Column>
         <Column
           field="machineLanguage"
           header="Machine Translated Content"
           editor={(options) => textEditor(options)}
-          style={{ width: "30%" }}
+          style={{ width: "20%" }}
         ></Column>
         <Column
           header="Modify"
+          headerStyle={{ width: "0%", minWidth: "8rem" }}
           rowEditor={allowEdit}
-          // body={modalTemplate}
-          headerStyle={{ width: "10%", minWidth: "8rem" }}
-          bodyStyle={{ textAlign: "center" }}
+          bodyStyle={{ textAlign: "" }}
         ></Column>
         <Column
-          headerStyle={{ width: "10%", minWidth: "8rem" }}
-          field="inventoryStatus"
-          header="Status"
-          body={statusBodyTemplate}
-          style={{ width: "0%" }}
+          body={checker}
+          headerStyle={{ width: "0%", minWidth: "rem" }}
+          bodyStyle={{ textAlign: "" }}
         ></Column>
         <Column
           header="PDF View"
           body={pdfViewer}
-          headerStyle={{ width: "0%", minWidth: "8rem" }}
+          headerStyle={{ width: "20%", minWidth: "rem", textAlign: "center" }}
           bodyStyle={{ textAlign: "center" }}
         ></Column>
       </DataTable>

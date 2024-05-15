@@ -17,25 +17,21 @@ import atob from "atob";
 function LoginComponent(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginCred, setlogincred] = useState("");
   const [loginError, setLoginError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState();
   const [token, setToken] = useSessionStorage("", "token");
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
   const msgs = useRef(null);
   const toast = useRef(null);
-  const [userName, setUserName] = useState()
-
-  console.log("user", userName);
+  const [userName, setUserName] = useState();
+  
 
   const url = window.location.href.split("?")[1];
   const urlParams = new URLSearchParams(url);
   const navigate = useNavigate();
-  // console.log("url", url);
-
   const getToken = () => {
-    window.location.href = "http://localhost/sme-review/login/with-o365";
+    window.location.href = "https://10.93.10.186/SME-Review-api/login/with-o365";
     setToken(url);
     handlePostCall();
   };
@@ -50,10 +46,9 @@ function LoginComponent(props) {
   };
 
   const handlePostCall = async (token) => {
-    // console.log("TOKEN", token);
     try {
       const formData = new FormData();
-      const apiUrl = "http://127.0.0.1:8000/api/azure-level";
+      const apiUrl = "https://10.93.10.186/SME-Review-api/api/azure-level";
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -61,23 +56,18 @@ function LoginComponent(props) {
         },
       });
       formData.append("accessToken", token);
-      // console.log("API response:", response.status);
 
       if (response.status === 200) {
-        const name = response.data.name
-        setUserName(name)
+        const name = response.data.name;
+        setUserName(name);
         showSuccess(name);
         setTimeout(() => {
           navigate("/prime-table");
         }, 2000);
       } else {
-        console.error("Login failed:", response);
-        // alert("login Failed");
         setError("Login failed. Please check your credentials.");
       }
     } catch (error) {
-      console.error("Error making API call:", error);
-      // alert("API err");
       setLoginError("Error making API call");
       setError("An error occurred. Please try again later.");
     } finally {
@@ -93,12 +83,8 @@ function LoginComponent(props) {
     if (newArr[0] != null) {
       localStorage.setItem("token", newArr[0]);
       handlePostCall(newArr[0]);
-      if (newArr[0] != null) {
-        // console.log("new", newArr);
-        console.log("Eff", userName);
-      }
     }
-  }, []);
+  }, [urlParams]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -107,15 +93,13 @@ function LoginComponent(props) {
 
     try {
       const response = await axios.post(
-        "https://10.93.10.186/SME-Review/api/login",
+        "https://10.93.10.186/SME-Review-api/api/login",
         {
           email,
           password,
         }
       );
 
-      console.log("Login successful:", response.data);
-      setlogincred(response.data);
       setToken(response.data.token);
       if (props.onLoginSuccess) {
         props.onLoginSuccess(response.data);
@@ -137,7 +121,6 @@ function LoginComponent(props) {
         <div className=" flex align-items-center justify-content-center pt-6 log-form">
           <div className=" logIn-form surface-card p-4 shadow-2 border-round w-full lg:w-6">
             <div className="text-center mb-5">
-              {/* <img src="" alt="hyper" height={50} className="mb-3" /> */}
               <div className="text-900 text-3xl font-medium mb-3">
                 SME-Review
               </div>
@@ -213,11 +196,6 @@ function LoginComponent(props) {
       <div className="card flex justify-content-center">
         <Toast ref={toast} />
       </div>
-      {/* {loginError && (
-          <Messages ref={msgs}>
-            <Messages severity="error" content={loginError} />
-          </Messages>
-        )} */}
     </div>
   );
 }

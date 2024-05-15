@@ -21,12 +21,12 @@ function App() {
       window.location.reload();
     }
   };
-
+  
   
 
   return (
     <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename="/SME-Review">
         <Routes>
         <Route
             path="/"

@@ -8,6 +8,12 @@ const API_CONSTANTS = {
     BASE_CONNECTION: "http://127.0.0.1:8000",
     BASE_TOKEN_CONNECTION: "http://localhost/sme-review",
     LOGIN_URL: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+
+    // SERVER CONNECTION
+    SER_BASE_CONNECTION: "https://10.93.10.186/SME-Review-api",
+    SER_BASE_TOKEN_CONNECTION: "https://10.93.10.186/SME-Review-api",
+    SER_LOGIN_URL: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+
   };
   
   export default API_CONSTANTS;

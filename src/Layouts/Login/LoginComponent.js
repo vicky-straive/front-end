@@ -6,6 +6,8 @@ import { useSessionStorage } from "primereact/hooks";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
+import API_CONSTANTS from '../../Service/API_Configs';
+
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "/node_modules/primeflex/primeflex.css";
@@ -15,23 +17,25 @@ import axios from "axios";
 import atob from "atob";
 
 function LoginComponent(props) {
+  // API Connections
+  const { BASE_CONNECTION, BASE_TOKEN_CONNECTION } = API_CONSTANTS;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState();
   const [token, setToken] = useSessionStorage("", "token");
-  const [error, setError] = useState(null);
-  const msgs = useRef(null);
-  const toast = useRef(null);
-  const [userName, setUserName] = useState();
-  
+  const [error, setError] = useState(null); 
+  const [userName, setUserName] = useState()
 
   const url = window.location.href.split("?")[1];
   const urlParams = new URLSearchParams(url);
   const navigate = useNavigate();
+  const toast = useRef(null);
+
   const getToken = () => {
-    window.location.href = "https://10.93.10.186/SME-Review-api/login/with-o365";
+    window.location.href = `${BASE_TOKEN_CONNECTION}/login/with-o365`;
     setToken(url);
     handlePostCall();
   };
@@ -48,7 +52,7 @@ function LoginComponent(props) {
   const handlePostCall = async (token) => {
     try {
       const formData = new FormData();
-      const apiUrl = "https://10.93.10.186/SME-Review-api/api/azure-level";
+      const apiUrl = `${BASE_CONNECTION}/api/azure-level`;
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

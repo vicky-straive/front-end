@@ -8,8 +8,6 @@ import Welcome from "./Layouts/Dashboard/Welcome";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
-  console.log("app", loggedInUser);
-
   
   const handleLoginSuccess = (loginData) => {
     setLoggedInUser(loginData);
@@ -17,14 +15,14 @@ function App() {
     if (loginData.status == true) {
       console.log("status", loginData.status);
       const history = window.history;
-      history.pushState({}, "", "/prime-table"); // Update URL and state
-      window.location.reload();
+      // history.pushState({}, "", "/prime-table"); // Update URL and state
+      // window.location.reload();
     }
   };
   
   return (
     <div className="App">
-      <BrowserRouter basename="/">
+      <BrowserRouter basename="/SME-Review">
         <Routes>
         <Route
             path="/"

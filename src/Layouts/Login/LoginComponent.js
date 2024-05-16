@@ -6,8 +6,9 @@ import { useSessionStorage } from "primereact/hooks";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Toast } from "primereact/toast";
-import API_CONSTANTS from '../../Service/API_Configs';
-
+import API_CONSTANTS from "../../Service/API_Configs";
+import { FloatLabel } from "primereact/floatlabel";
+import MSIcon from "../../Asset/Login/ms-icon.png";
 
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "/node_modules/primeflex/primeflex.css";
@@ -18,7 +19,8 @@ import atob from "atob";
 
 function LoginComponent(props) {
   // API Connections
-  const { BASE_CONNECTION, BASE_TOKEN_CONNECTION } = API_CONSTANTS;
+  const { BASE_CONNECTION, BASE_TOKEN_CONNECTION, SER_BASE_CONNECTION } =
+    API_CONSTANTS;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,18 +28,25 @@ function LoginComponent(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState();
   const [token, setToken] = useSessionStorage("", "token");
-  const [error, setError] = useState(null); 
-  const [userName, setUserName] = useState()
+  const [error, setError] = useState(null);
+  const [userName, setUserName] = useState();
+  const [tokenURL, setTokenURL] = useState("");
 
   const url = window.location.href.split("?")[1];
   const urlParams = new URLSearchParams(url);
   const navigate = useNavigate();
   const toast = useRef(null);
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^.{8,}$/;
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isPasswordValid, setIsPasswordValid] = useState(true);
+
+  console.log("token", token);
+
   const getToken = () => {
-    window.location.href = `${BASE_TOKEN_CONNECTION}/login/with-o365`;
-    setToken(url);
-    handlePostCall();
+    debugger;
+    window.location.href = `${SER_BASE_CONNECTION}/login/with-o365`;
   };
 
   const showSuccess = (name) => {
@@ -52,7 +61,11 @@ function LoginComponent(props) {
   const handlePostCall = async (token) => {
     try {
       const formData = new FormData();
-      const apiUrl = `${BASE_CONNECTION}/api/azure-level`;
+      const url = window.location.href.split("?")[1];
+      setToken(url);
+      console.log("url", tokenURL);
+
+      const apiUrl = `${SER_BASE_CONNECTION}/api/azure-level`;
       const response = await axios.post(apiUrl, formData, {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -86,6 +99,7 @@ function LoginComponent(props) {
     }
     if (newArr[0] != null) {
       localStorage.setItem("token", newArr[0]);
+      console.log("New", newArr[0]);
       handlePostCall(newArr[0]);
     }
   }, [urlParams]);
@@ -120,79 +134,100 @@ function LoginComponent(props) {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className=" flex align-items-center justify-content-center pt-6 log-form">
-          <div className=" logIn-form surface-card p-4 shadow-2 border-round w-full lg:w-6">
-            <div className="text-center mb-5">
-              <div className="text-900 text-3xl font-medium mb-3">
-                SME-Review
+    <div className="login-container">
+      <form onSubmit={handleSubmit} className="login-container-form">
+        <div className=" flex align-items-center justify-content-center  log-form">
+          <div className=" logIn-form surface-card shadow-2 border-round w-full lg:w-9 grid">
+            <div class="col col-left">
+              <div className="text-center mb-5">
+                <div className="text-900 text-3xl font-medium mb-3"></div>
               </div>
-              <span className="text-600 font-medium line-height-3">
-                Srtive Employee?
-              </span>
-              <a className="font-medium no-underline ml-2 text-blue-500 cursor-pointer srtive">
-                <Link className="link" onClick={getToken}>
-                  Click here!
-                </Link>
-              </a>
             </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-900 font-medium mb-2"
-              >
-                Email
-              </label>
-              <InputText
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                id="email"
-                type="text"
-                placeholder="Email address"
-                className="w-full mb-3 input-field"
-              />
-
-              <label
-                htmlFor="password"
-                className="block text-900 font-medium mb-2"
-              >
-                Password
-              </label>
-              <InputText
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                id="password"
-                type="password"
-                placeholder="Password"
-                className="w-full mb-3 input-field"
-              />
-
-              <div className="flex align-items-center justify-content-between mb-6">
-                <div className="flex align-items-center">
-                  <Checkbox
-                    id="rememberme"
-                    onChange={(e) => setChecked(e.checked)}
-                    checked={checked}
-                    className="mr-2 check"
-                  />
-                  <label htmlFor="rememberme">Remember me</label>
-                </div>
-                <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">
-                  Forgot your password?
-                </a>
+            <div class="col col-right p-5">
+              <div className="grid">
+                <h2 className="col">Log In</h2>
+                <h2 className="col SME">SME Review</h2>
               </div>
+              <div className="col-right-sign-form ">
+                <FloatLabel className="mt-6 f-label">
+                  <InputText
+                    id="username"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setIsEmailValid(emailRegex.test(e.target.value));
+                    }}
+                    className={`${!isEmailValid ? "p-invalid" : ""}`}
+                  />
+                  <label htmlFor="username">Username</label>
+                  {!isEmailValid && (
+                    <small className="p-error">
+                      Please enter a valid email address.
+                    </small>
+                  )}
+                </FloatLabel>
+                <FloatLabel className="mt-6 f-label">
+                  <InputText
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setIsPasswordValid(passwordRegex.test(e.target.value));
+                    }}
+                    className={`${!isPasswordValid ? "p-invalid" : ""}`}
+                  />
+                  <label htmlFor="username">Password</label>
+                  {!isPasswordValid && (
+                    <small className="p-error">
+                      Password must be at least 8 characters long.
+                    </small>
+                  )}
+                </FloatLabel>
 
-              <Button
-                type="submit"
-                onSubmit={handleSubmit}
-                label="Sign In"
-                icon="pi pi-user"
-                className="w-full sub-btn"
-                loading={isLoading}
-                disabled={isLoading}
-              />
+                <div className="flex align-items-center justify-content-between mb-6">
+                  <div className="flex align-items-center mt-6">
+                    <Checkbox
+                      id="rememberme"
+                      onChange={(e) => setChecked(e.checked)}
+                      checked={checked}
+                      className="mr-2 check "
+                    />
+                    <label htmlFor="rememberme">Keep me logged in</label>
+                  </div>
+                  <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer mt-6">
+                    Forgot your password?
+                  </a>
+                </div>
+
+                <Button
+                  type="submit"
+                  onSubmit={handleSubmit}
+                  label="Sign In"
+                  className="w-full sub-btn"
+                  loading={isLoading}
+                  disabled={isLoading}
+                />
+              </div>
+              <div className="ms-btn-container grid mt-6 ml-1">
+                <span className="text-600 font-medium ms-text straive">
+                  Srtive Employee?
+                  <span className="text-600 font-medium ms-text ml-1">
+                    Sign in with
+                  </span>
+                </span>
+                <div
+                  className="ms-icon-container mt-3 cursor-pointer"
+                  onClick={getToken}
+                  loading={isLoading}
+                  disabled={isLoading}
+                >
+                  <img src={MSIcon} className="ms-icon" />
+                  <span className="text-600 font-medium ms-icon-text ml-1">
+                    Microsoft
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -1,33 +1,85 @@
-.log-form{
-    background-color: #f5f5f5;
-    height: 100vh;
+.login-container{
+  height: 100vh;
+}
+
+.login-container-form{
+  height: auto;
+}
+
+.log-form {
+  background-image: url("../../Asset/Login/loginBG.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
 }
 
 .logIn-form {
   position: relative;
   background: #ffffff !important;
-  /* border-radius: 15px !important; */
+  height: auto;
+  border-radius: 15px !important;
 }
 
-.link{
+.col-left {
+  background-color: #ededed;
+  border-radius: 15px 0px 0px 15px !important;
+  background-image: url("../../Asset/Login/LL.gif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.col-right {
+  /* background-color: #fcb900; */
+}
+.f-label{
+height: 50px;
+}
+
+.SME{
+  display: flex;
+  justify-content: end;
+}
+
+.col-right-sign-form {
+}
+
+.link {
   color: #ff5100fb;
-    text-decoration: none;
+  text-decoration: none;
 }
 
-.input-field:focus{
-    outline: 0 none;
-    outline-offset: 0;
-    box-shadow: 0 0 0 0.1rem #ff5100fb;
-    border-color: #ffffff;
+.p-inputtext {
+  width: 100%;
+}
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.1rem #ff5100fb;
+  border-color: #ffffff;
 }
 
-.input-field:hover{
-    border-color: #ff5100fb;
+.p-inputtext:enabled:hover {
+  border-color: #ff5100fb;
 }
 
 .sub-btn {
-  background-color: #ff5000;
+  display: flex;
+
   border: #ff5000;
+  border-radius: 3px;
+
+  background: linear-gradient(to left, #ff5000 50%, black 50%) !important;
+  background-size: 200% 100% !important;
+  background-position: right bottom  ;
+  transition: all .5s ease-out;
+}
+
+.sub-btn:hover {
+  background-color: #ff5000 !important;
+  background-position: right bottom !important;
+
 }
 
 .sub-btn:focus {
@@ -36,16 +88,61 @@
   box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #ff5000, 0 1px 2px 0 rgb(0, 0, 0);
 }
 
-.srtive{
-    color: #ff5000 !important;
+.ms-btn-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-items: baseline;
+}
+
+.ms-text {
+  display: flex;
+}
+
+.ms-icon-container {
+  display: flex;
+  border-radius: 3px;
+  background: linear-gradient(to right, black 50%, white 50%);
+  background-size: 250% 100%;
+  background-position: right bottom;
+  transition: all .5s ease-out;
+  padding: 10px;
+}
+
+.ms-icon-container:hover {
+  background-position: left bottom;
+  width: auto;
+  color: white !important;
+
+}
+
+.ms-icon-text {
+  display: flex;
+  align-items: center;
+  background-position: right bottom;
+  transition: all .5s ease-out;
+}
+
+.ms-icon-text:hover{
+  color: white !important;
+}
+
+.ms-icon {
+  height: 30px;
+}
+
+/* For both .ms-icon-container .ms-icon-text:hover and .another-class:hover */
+
+.straive {
+  color: #ff5000 !important;
 }
 
 .p-checkbox.p-highlight .p-checkbox-box {
-    border-color: #ff5000;
-    background: #ff5000;
+  border-color: #ff5000;
+  background: #ff5000;
 }
 
 .p-checkbox:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
-    border-color: #ff5000 ;
-    /* background: #ff5000; */
+  border-color: #ff5000;
+  /* background: #ff5000; */
 }

@@ -9,24 +9,24 @@ import Welcome from "./Layouts/Dashboard/Welcome";
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
   
-  const handleLoginSuccess = (loginData) => {
-    setLoggedInUser(loginData);
-    // Navigate to prime-table on successful login (using history API)
-    if (loginData.status == true) {
-      console.log("status", loginData.status);
-      const history = window.history;
-      // history.pushState({}, "", "/prime-table"); // Update URL and state
-      // window.location.reload();
-    }
-  };
+  // const handleLoginSuccess = (loginData) => {
+  //   setLoggedInUser(loginData);
+  //   // Navigate to prime-table on successful login (using history API)
+  //   if (loginData.status == true) {
+  //     console.log("status", loginData.status);
+  //     const history = window.history;
+  //     // history.pushState({}, "", "/prime-table"); // Update URL and state
+  //     // window.location.reload();
+  //   }
+  // };
   
   return (
     <div className="App">
-      <BrowserRouter basename="/SME-Review">
+      <BrowserRouter basename="/">
         <Routes>
         <Route
             path="/"
-            element={<LoginComponent onLoginSuccess={handleLoginSuccess} />}
+            element={<LoginComponent />}
           />
           <Route path="/prime-table" element={<PrimeTable />} />
           <Route path="/dashboard" element={<Welcome />} />

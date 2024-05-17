@@ -58,6 +58,15 @@ function LoginComponent(props) {
     });
   };
 
+  const showErr = (err) => {
+    toast.current.show({
+      severity: "error",
+      summary: "An Error Occured",
+      detail: `${err}, Please try again later`,
+      life: 3000,
+    });
+  };
+
   const handlePostCall = async (token) => {
     try {
       const formData = new FormData();
@@ -75,7 +84,7 @@ function LoginComponent(props) {
       formData.append("accessToken", token);
 
       if (response.status === 200) {
-        const name = response.data.name;
+        const name = response?.data?.name;
         setUserName(name);
         showSuccess(name);
         setTimeout(() => {
@@ -119,15 +128,20 @@ function LoginComponent(props) {
       );
 
       setToken(response.data.token);
-      if (props.onLoginSuccess) {
-        props.onLoginSuccess(response.data);
-        navigate("/prime-table");
+      console.log("res", response);
+      const name = response.data.name;
+      if (response.data.status == true) {
+        setIsLoading(true);
+        showSuccess(name);
+        setTimeout(() => {
+          // navigate("/prime-table");
+        }, 2000);
+      } else {
+        showErr(response?.data?.message);
       }
     } catch (error) {
-      setLoginError(
-        error.response?.data?.message ||
-          "An error occurred during login. Please try again."
-      );
+      console.log("err", error.message);
+      showErr(error?.message);
     } finally {
       setIsLoading(false);
     }
@@ -206,7 +220,7 @@ function LoginComponent(props) {
                   label="Sign In"
                   className="w-full sub-btn"
                   loading={isLoading}
-                  disabled={isLoading}
+                  disabled={!isEmailValid || !isPasswordValid}
                 />
               </div>
               <div className="ms-btn-container grid mt-6 ml-1">

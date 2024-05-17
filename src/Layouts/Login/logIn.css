@@ -7,18 +7,31 @@
 }
 
 .log-form {
-  background-image: url("../../Asset/Login/loginBG.png");
+  background-image: url("../../Asset/Login/BgGradient.gif");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
 }
 
-.logIn-form {
-  position: relative;
-  background: #ffffff !important;
-  height: auto;
-  border-radius: 15px !important;
+@media (max-width: 768px) {
+  .logIn-form {
+    position: relative;
+    background: #ffffff !important;
+    height: auto;
+    border-radius: 15px !important;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 769px) {
+  .logIn-form {
+    position: relative;
+    background: #ffffff !important;
+    height: auto;
+    border-radius: 15px !important;
+    max-width: auto;
+  }
 }
 
 .col-left {
@@ -70,7 +83,7 @@ height: 50px;
   border: #ff5000;
   border-radius: 3px;
 
-  background: linear-gradient(to left, #ff5000 50%, black 50%) !important;
+  background: linear-gradient(to left, #1ea97c 50%, black 50%) !important;
   background-size: 200% 100% !important;
   background-position: right bottom  ;
   transition: all .5s ease-out;

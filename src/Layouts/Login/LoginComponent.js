@@ -13,11 +13,21 @@ import MSIcon from "../../Asset/Login/ms-icon.png";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 import "./logIn.css";
+import bgHGif from '../../Asset/Login/BG-H.gif'; 
+
 
 import axios from "axios";
 import atob from "atob";
 
-function LoginComponent(props) {
+const GifComponent = () => {
+  return (
+    <div className="gif-container">
+      <img src={bgHGif} alt="Background GIF" className="gif-card" loop={false} />
+    </div>
+  );
+};
+
+function LoginComponent() {
   // API Connections
   const { BASE_CONNECTION, BASE_TOKEN_CONNECTION, SER_BASE_CONNECTION } =
     API_CONSTANTS;
@@ -41,8 +51,8 @@ function LoginComponent(props) {
   const passwordRegex = /^.{8,}$/;
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPasswordValid, setIsPasswordValid] = useState(true);
+  const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
 
-  console.log("token", token);
 
   const getToken = () => {
     debugger;
@@ -133,6 +143,7 @@ function LoginComponent(props) {
       if (response.data.status == true) {
         setIsLoading(true);
         showSuccess(name);
+        setIsLoginSuccessful(true)
         setTimeout(() => {
           // navigate("/prime-table");
         }, 2000);
@@ -151,7 +162,7 @@ function LoginComponent(props) {
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-container-form">
         <div className=" flex align-items-center justify-content-center  log-form">
-          <div className=" logIn-form surface-card shadow-2 border-round w-full lg:w-9 grid">
+          <div className={`logIn-form surface-card shadow-2 border-round w-full lg:w-9 grid ${isLoginSuccessful ? 'hidden' : ''}`}>
             <div class="col col-left">
               <div className="text-center mb-5">
                 <div className="text-900 text-3xl font-medium mb-3"></div>
@@ -244,6 +255,7 @@ function LoginComponent(props) {
               </div>
             </div>
           </div>
+          {isLoginSuccessful && <GifComponent className="gifbg" />}
         </div>
       </form>
       <div className="card flex justify-content-center">

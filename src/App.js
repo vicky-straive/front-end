@@ -22,7 +22,7 @@ function App() {
   
   return (
     <div className="App">
-      <BrowserRouter basename="/">
+      <BrowserRouter basename="/SME-Review">
         <Routes>
         <Route
             path="/"

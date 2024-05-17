@@ -1,8 +1,8 @@
-.login-container{
+.login-container {
   height: 100vh;
 }
 
-.login-container-form{
+.login-container-form {
   height: auto;
 }
 
@@ -21,6 +21,7 @@
     height: auto;
     border-radius: 15px !important;
     max-width: 50%;
+    transition: all 0.5s ease-out;
   }
 }
 
@@ -31,13 +32,40 @@
     height: auto;
     border-radius: 15px !important;
     max-width: auto;
+    transition: all 0.5s ease-out;
   }
+}
+
+@media (max-width: 768px) {
+  .gif-container {
+    position: relative;
+    height: auto;
+    border-radius: 15px !important;
+  }
+}
+
+@media (max-width: 769px) {
+  .gif-container {
+    position: relative;
+    height: auto;
+    border-radius: 15px !important;
+  }
+}
+
+.gif-card {
+  border-radius: 15px;
+}
+
+.hidden {
+  transition: all 0.5s ease-out;
+
+  display: none;
 }
 
 .col-left {
   background-color: #ededed;
   border-radius: 15px 0px 0px 15px !important;
-  background-image: url("../../Asset/Login/LL.gif");
+  background-image: url("../../Asset/Login/LL1.gif");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -46,11 +74,11 @@
 .col-right {
   /* background-color: #fcb900; */
 }
-.f-label{
-height: 50px;
+.f-label {
+  height: 50px;
 }
 
-.SME{
+.SME {
   display: flex;
   justify-content: end;
 }
@@ -85,14 +113,13 @@ height: 50px;
 
   background: linear-gradient(to left, #1ea97c 50%, black 50%) !important;
   background-size: 200% 100% !important;
-  background-position: right bottom  ;
-  transition: all .5s ease-out;
+  background-position: right bottom;
+  transition: all 0.5s ease-out;
 }
 
 .sub-btn:hover {
   background-color: #ff5000 !important;
   background-position: right bottom !important;
-
 }
 
 .sub-btn:focus {
@@ -118,7 +145,7 @@ height: 50px;
   background: linear-gradient(to right, black 50%, white 50%);
   background-size: 250% 100%;
   background-position: right bottom;
-  transition: all .5s ease-out;
+  transition: all 0.5s ease-out;
   padding: 10px;
 }
 
@@ -126,17 +153,16 @@ height: 50px;
   background-position: left bottom;
   width: auto;
   color: white !important;
-
 }
 
 .ms-icon-text {
   display: flex;
   align-items: center;
   background-position: right bottom;
-  transition: all .5s ease-out;
+  transition: all 0.5s ease-out;
 }
 
-.ms-icon-text:hover{
+.ms-icon-text:hover {
   color: white !important;
 }
 

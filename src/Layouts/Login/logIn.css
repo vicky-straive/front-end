@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo+Play:wght@200..1000&display=swap');
+
+/* General Styles */
 .login-container {
   height: 100vh;
 }
@@ -7,14 +10,47 @@
 }
 
 .log-form {
-  background-image: url("../../Asset/Login/BgGradient.gif");
+  /* background-image: url("../../Asset/Login/BgGradient.gif"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 100vh;
+
+  background: rgba(106, 255, 148, 0.35);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10.5px);
+  webkit-backdrop-filter: blur(10.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-@media (max-width: 768px) {
+/* Media Queries */
+/* For Mobile Devices */
+@media (max-width: 767px) {
+  .logIn-form,
+  .gif-container {
+    position: relative;
+    height: auto;
+    border-radius: 15px !important;
+    max-width: 90%;
+    transition: all 0.5s ease-out;
+  }
+}
+
+/* For Tablets */
+@media (min-width: 768px) and (max-width: 991px) {
+  .logIn-form,
+  .gif-container {
+    position: relative;
+    height: auto;
+    border-radius: 15px !important;
+    max-width: 70%;
+    transition: all 0.5s ease-out;
+  }
+}
+
+/* For Laptops */
+@media (min-width: 992px) and (max-width: 1199px) {
   .logIn-form {
     position: relative;
     background: #ffffff !important;
@@ -25,55 +61,54 @@
   }
 }
 
-@media (min-width: 769px) {
+/* For Monitors */
+@media (min-width: 1200px) {
   .logIn-form {
     position: relative;
     background: #ffffff !important;
     height: auto;
     border-radius: 15px !important;
-    max-width: auto;
+    max-width: 70%;
     transition: all 0.5s ease-out;
   }
 }
 
-@media (max-width: 768px) {
-  .gif-container {
+@media (max-width: 1200px) {
+  .logIn-form {
     position: relative;
+    background: #ffffff !important;
     height: auto;
     border-radius: 15px !important;
+    max-width: 10%;
+    transition: all 0.5s ease-out;
   }
 }
 
-@media (max-width: 769px) {
-  .gif-container {
-    position: relative;
-    height: auto;
-    border-radius: 15px !important;
-  }
-}
-
+/* Layout Styles */
 .gif-card {
   border-radius: 15px;
 }
 
 .hidden {
-  transition: all 0.5s ease-out;
-
   display: none;
+  transition: all 0.5s ease-out;
 }
 
 .col-left {
-  background-color: #ededed;
+  background-color: #92e3a9;
   border-radius: 15px 0px 0px 15px !important;
   background-image: url("../../Asset/Login/LL1.gif");
-  background-size: cover;
+  background-size: auto;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .col-right {
   /* background-color: #fcb900; */
+  /* width: 75? */
 }
+
+/* Form Styles */
 .f-label {
   height: 50px;
 }
@@ -81,6 +116,24 @@
 .SME {
   display: flex;
   justify-content: end;
+}
+.col-right-signIn-cont{
+width: 70%;
+margin: auto;
+}
+
+.title{
+  font-family: "Cairo Play", sans-serif;
+  font-optical-sizing: 4em;
+  font-weight: 700;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+  font-size: 35px;
+  margin: auto;
+}
+
+.log-title{
+  text-align: center;
 }
 
 .col-right-sign-form {
@@ -94,6 +147,7 @@
 .p-inputtext {
   width: 100%;
 }
+
 .p-inputtext:enabled:focus {
   outline: 0 none;
   outline-offset: 0;
@@ -105,12 +159,11 @@
   border-color: #ff5100fb;
 }
 
+/* Button Styles */
 .sub-btn {
   display: flex;
-
   border: #ff5000;
   border-radius: 3px;
-
   background: linear-gradient(to left, #1ea97c 50%, black 50%) !important;
   background-size: 200% 100% !important;
   background-position: right bottom;
@@ -128,6 +181,34 @@
   box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #ff5000, 0 1px 2px 0 rgb(0, 0, 0);
 }
 
+.hr-c{
+position: relative;
+  top: 25px;
+}
+
+.hr-text{
+  text-align: center;
+  margin: 10px 0;
+
+}
+
+.hr{
+  border: none;
+  height: 1px;
+  margin: 30px 0;
+  padding: 0;
+  overflow: visible;
+  border: none;
+  background-color: #c9c9c9;
+  color: #111111;
+  text-align: center;
+}
+
+.hr-text{
+  color: black;
+}
+
+/* Microsoft Button Styles */
 .ms-btn-container {
   display: flex;
   align-items: center;
@@ -170,8 +251,13 @@
   height: 30px;
 }
 
-/* For both .ms-icon-container .ms-icon-text:hover and .another-class:hover */
+/* Spinner Styles */
+.spinner {
+  width: 25px;
+  height: 25px;
+}
 
+/* Miscellaneous Styles */
 .straive {
   color: #ff5000 !important;
 }
@@ -183,5 +269,4 @@
 
 .p-checkbox:not(.p-disabled):has(.p-checkbox-input:hover) .p-checkbox-box {
   border-color: #ff5000;
-  /* background: #ff5000; */
 }

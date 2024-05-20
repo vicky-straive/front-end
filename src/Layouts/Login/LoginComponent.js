@@ -13,8 +13,8 @@ import MSIcon from "../../Asset/Login/ms-icon.png";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "/node_modules/primeflex/primeflex.css";
 import "./logIn.css";
-import bgHGif from '../../Asset/Login/BG-H.gif'; 
-
+import { ProgressSpinner } from "primereact/progressspinner";
+import bgHGif from "../../Asset/Login/BG-H.gif";
 
 import axios from "axios";
 import atob from "atob";
@@ -22,7 +22,12 @@ import atob from "atob";
 const GifComponent = () => {
   return (
     <div className="gif-container">
-      <img src={bgHGif} alt="Background GIF" className="gif-card" loop={false} />
+      <img
+        src={bgHGif}
+        alt="Background GIF"
+        className="gif-card"
+        loop={false}
+      />
     </div>
   );
 };
@@ -38,9 +43,7 @@ function LoginComponent() {
   const [isLoading, setIsLoading] = useState(false);
   const [checked, setChecked] = useState();
   const [token, setToken] = useSessionStorage("", "token");
-  const [error, setError] = useState(null);
   const [userName, setUserName] = useState();
-  const [tokenURL, setTokenURL] = useState("");
 
   const url = window.location.href.split("?")[1];
   const urlParams = new URLSearchParams(url);
@@ -53,9 +56,7 @@ function LoginComponent() {
   const [isPasswordValid, setIsPasswordValid] = useState(true);
   const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
 
-
   const getToken = () => {
-    debugger;
     window.location.href = `${SER_BASE_CONNECTION}/login/with-o365`;
   };
 
@@ -82,7 +83,6 @@ function LoginComponent() {
       const formData = new FormData();
       const url = window.location.href.split("?")[1];
       setToken(url);
-      console.log("url", tokenURL);
 
       const apiUrl = `${SER_BASE_CONNECTION}/api/azure-level`;
       const response = await axios.post(apiUrl, formData, {
@@ -97,15 +97,15 @@ function LoginComponent() {
         const name = response?.data?.name;
         setUserName(name);
         showSuccess(name);
+        setIsLoginSuccessful(true);
         setTimeout(() => {
           navigate("/prime-table");
-        }, 2000);
+        }, 3000);
       } else {
-        setError("Login failed. Please check your credentials.");
+        showErr("Login failed. Please check your credentials.");
       }
     } catch (error) {
-      setLoginError("Error making API call");
-      setError("An error occurred. Please try again later.");
+      showErr(error?.message);
     } finally {
       setIsLoading(false);
     }
@@ -118,7 +118,6 @@ function LoginComponent() {
     }
     if (newArr[0] != null) {
       localStorage.setItem("token", newArr[0]);
-      console.log("New", newArr[0]);
       handlePostCall(newArr[0]);
     }
   }, [urlParams]);
@@ -130,7 +129,7 @@ function LoginComponent() {
 
     try {
       const response = await axios.post(
-        "https://10.93.10.186/SME-Review-api/api/login",
+        `${SER_BASE_CONNECTION}/api/login`,
         {
           email,
           password,
@@ -143,10 +142,10 @@ function LoginComponent() {
       if (response.data.status == true) {
         setIsLoading(true);
         showSuccess(name);
-        setIsLoginSuccessful(true)
+        setIsLoginSuccessful(true);
         setTimeout(() => {
-          // navigate("/prime-table");
-        }, 2000);
+          navigate("/prime-table");
+        }, 3000);
       } else {
         showErr(response?.data?.message);
       }
@@ -162,17 +161,22 @@ function LoginComponent() {
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-container-form">
         <div className=" flex align-items-center justify-content-center  log-form">
-          <div className={`logIn-form surface-card shadow-2 border-round w-full lg:w-9 grid ${isLoginSuccessful ? 'hidden' : ''}`}>
+          <div
+            className={`logIn-form surface-card shadow-2 border-round w-full lg:w-9 grid ${
+              isLoginSuccessful ? "hidden" : ""
+            }`}
+          >
             <div class="col col-left">
               <div className="text-center mb-5">
                 <div className="text-900 text-3xl font-medium mb-3"></div>
               </div>
             </div>
             <div class="col col-right p-5">
-              <div className="grid">
-                <h2 className="col">Log In</h2>
-                <h2 className="col SME">SME Review</h2>
+              <div>
+                <h2 className="col title">SME Review</h2>
               </div>
+              <div className="col-right-signIn-cont">
+              <h2 className="col log-title">Log In</h2>
               <div className="col-right-sign-form ">
                 <FloatLabel className="mt-6 f-label">
                   <InputText
@@ -212,13 +216,13 @@ function LoginComponent() {
 
                 <div className="flex align-items-center justify-content-between mb-6">
                   <div className="flex align-items-center mt-6">
-                    <Checkbox
+                    {/* <Checkbox
                       id="rememberme"
                       onChange={(e) => setChecked(e.checked)}
                       checked={checked}
                       className="mr-2 check "
                     />
-                    <label htmlFor="rememberme">Keep me logged in</label>
+                    <label htmlFor="rememberme">Keep me logged in</label> */}
                   </div>
                   <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer mt-6">
                     Forgot your password?
@@ -231,12 +235,20 @@ function LoginComponent() {
                   label="Sign In"
                   className="w-full sub-btn"
                   loading={isLoading}
-                  disabled={!isEmailValid || !isPasswordValid}
+                  disabled={
+                    !isEmailValid || !isPasswordValid || !email || !password
+                  }
                 />
+              </div>
+              <div className="hr-c grid">
+                <hr className="hr hr-l col-5 "/>
+                <span className="col-2 hr-text">OR</span>
+                <hr className="hr hr-r col-5  "/>
+
               </div>
               <div className="ms-btn-container grid mt-6 ml-1">
                 <span className="text-600 font-medium ms-text straive">
-                  Srtive Employee?
+                  Straive Employee?
                   <span className="text-600 font-medium ms-text ml-1">
                     Sign in with
                   </span>
@@ -247,11 +259,24 @@ function LoginComponent() {
                   loading={isLoading}
                   disabled={isLoading}
                 >
-                  <img src={MSIcon} className="ms-icon" />
+                  {isLoading ? (
+                    <ProgressSpinner
+                      className="spinner ml-2"
+                      style={{}}
+                      strokeWidth="8"
+                      fill="var(--surface-ground)"
+                      animationDuration=".5s"
+                    />
+                  ) : (
+                    <img src={MSIcon} className="ms-icon" />
+                  )}
+                  {/* <img src={MSIcon} className="ms-icon" /> */}
                   <span className="text-600 font-medium ms-icon-text ml-1">
                     Microsoft
                   </span>
+                  {/* <ProgressSpinner className="spinner ml-2" style={{}} strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s" /> */}
                 </div>
+              </div>
               </div>
             </div>
           </div>

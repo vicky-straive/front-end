@@ -16,8 +16,8 @@ function Welcome() {
   return (
     <div>
       <h1>Welcome to Dashboard</h1>
-      <button onClick={() => showSuccess('John Doe')}>Show Toast</button>
-      <Toast ref={toast} />
+      {/* <button onClick={() => showSuccess('John Doe')}>Show Toast</button> */}
+      {/* <Toast ref={toast} /> */}
     </div>
   );
 }

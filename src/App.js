@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import PrimeTable from "./components/Table/PrimeTable";
 import LoginComponent from "./Layouts/Login/LoginComponent";
 import NavBar from "./components/NavBar/NavBar";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Welcome from "./Layouts/Dashboard/Welcome";
 import DetailsPanel from "./components/Panel/DetailsPanel"
 

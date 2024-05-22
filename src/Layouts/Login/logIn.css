@@ -25,53 +25,12 @@
 }
 
 /* Media Queries */
-/* For Mobile Devices */
-@media (max-width: 767px) {
-  .logIn-form,
-  .gif-container {
-    position: relative;
-    height: auto;
-    border-radius: 15px !important;
-    max-width: 90%;
-    transition: all 0.5s ease-out;
-  }
-}
-
-/* For Tablets */
-@media (min-width: 768px) and (max-width: 991px) {
-  .logIn-form,
-  .gif-container {
-    position: relative;
-    height: auto;
-    border-radius: 15px !important;
-    max-width: 70%;
-    transition: all 0.5s ease-out;
-  }
-}
 
 /* For Laptops */
-@media (min-width: 992px) and (max-width: 1199px) {
-  .logIn-form {
-    position: relative;
-    background: #ffffff !important;
-    height: auto;
-    border-radius: 15px !important;
-    max-width: 50%;
-    transition: all 0.5s ease-out;
-  }
-}
+
 
 /* For Monitors */
-@media (min-width: 1200px) {
-  .logIn-form {
-    position: relative;
-    background: #ffffff !important;
-    height: auto;
-    border-radius: 15px !important;
-    max-width: 70%;
-    transition: all 0.5s ease-out;
-  }
-}
+
 
 @media (max-width: 1200px) {
   .logIn-form {
@@ -79,7 +38,7 @@
     background: #ffffff !important;
     height: auto;
     border-radius: 15px !important;
-    max-width: 10%;
+    max-width: 100%;
     transition: all 0.5s ease-out;
   }
 }

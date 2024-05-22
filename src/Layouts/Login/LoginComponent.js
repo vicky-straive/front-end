@@ -34,16 +34,19 @@ const GifComponent = () => {
 
 function LoginComponent() {
   // API Connections
-  const { BASE_CONNECTION, BASE_TOKEN_CONNECTION, SER_BASE_CONNECTION } =
+  const { BASE_TOKEN_CONNECTION, SER_BASE_CONNECTION } =
     API_CONSTANTS;
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [checked, setChecked] = useState();
+  const [logData, setLogedData] = useState();
   const [token, setToken] = useSessionStorage("", "token");
   const [userName, setUserName] = useState();
+
+  console.log("session", token);
+  console.log("log Data", logData);
 
   const url = window.location.href.split("?")[1];
   const urlParams = new URLSearchParams(url);
@@ -82,7 +85,7 @@ function LoginComponent() {
     try {
       const formData = new FormData();
       const url = window.location.href.split("?")[1];
-      setToken(url);
+      // setToken(url);
 
       const apiUrl = `${SER_BASE_CONNECTION}/api/azure-level`;
       const response = await axios.post(apiUrl, formData, {
@@ -95,8 +98,11 @@ function LoginComponent() {
 
       if (response.status === 200) {
         const name = response?.data?.name;
+        const logToken = response
+        console.log("MS Res", response.data.token)
         setUserName(name);
         showSuccess(name);
+        // setLogedData(response.data.token)
         setIsLoginSuccessful(true);
         setTimeout(() => {
           navigate("/job_details");
@@ -118,10 +124,14 @@ function LoginComponent() {
     }
     if (newArr[0] != null) {
       localStorage.setItem("token", newArr[0]);
+      setToken(newArr[0]);
       handlePostCall(newArr[0]);
+      console.log("ARR", newArr[0]);
     }
-  }, [urlParams]);
+  }, []);
 
+
+  // This call will hapen from the input fields
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);

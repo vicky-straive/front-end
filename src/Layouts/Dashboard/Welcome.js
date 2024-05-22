@@ -3,16 +3,19 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import API_CONSTANTS from "../../Service/API_Configs";
-import { useSessionStorage } from "primereact/hooks";
+import { useLocalStorage, useSessionStorage  } from "primereact/hooks";
 import axios from "axios";
 import "./dash.css";
 import DetailsPanel from "../../components/Panel/DetailsPanel";
 import { useNavigate } from "react-router-dom";
 
+
 function Welcome() {
   const [products, setProducts] = useState([]);
-  const { SER_BASE_CONNECTION } = API_CONSTANTS;
-  const [token] = useSessionStorage("", "token");
+  const { SER_BASE_CONNECTION, BASE_TOKEN_CONNECTION } = API_CONSTANTS;
+  const [token] = useSessionStorage("", "token")
+
+  console.log("local Sess", token);
   const [selectedRow, setSelectedRow] = useState(null);
   const navigate = useNavigate();
 
@@ -28,7 +31,7 @@ function Welcome() {
     {
       field: "review",
       header: "Actions",
-      body: (rowData) => ( 
+      body: (rowData) => (
         <Button
           className="review-btn"
           label="Review"
@@ -41,6 +44,7 @@ function Welcome() {
   ];
 
   useEffect(() => {
+  
     const fetchData = async () => {
       try {
         const apiUrl = `${SER_BASE_CONNECTION}/api/GetJobDetailsData`;

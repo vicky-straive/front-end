@@ -28,7 +28,7 @@ const toggleProfilePanel = () => {
         {
             label: 'Home',
             icon: 'pi pi-home',
-            url: '/sme_review/job_details'
+            url: '/SME-Review/job_details'
         },
         // {
         //     label: 'Features',

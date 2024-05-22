@@ -17,7 +17,7 @@ import './panel.css'
           icon: "pi pi-sign-out",
           command: () => {
             sessionStorage.setItem("token", null);
-            window.location.href = "/sme_review";
+            window.location.href = "/SME-Review";
           },
         },
             ]

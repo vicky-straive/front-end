@@ -11,7 +11,7 @@ import DetailsPanel from "./components/Panel/DetailsPanel"
 function App() {
   return (
     <div className="App">
-      <BrowserRouter basename="/sme_review">
+      <BrowserRouter basename="/SME-Review">
         <Routes>
           <Route path="/" element={<LoginComponent />} />
           <Route

@@ -6,24 +6,26 @@ import LoginComponent from "./Layouts/Login/LoginComponent";
 import NavBar from "./components/NavBar/NavBar";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Welcome from "./Layouts/Dashboard/Welcome";
+import DetailsPanel from "./components/Panel/DetailsPanel"
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter basename="/SME-Review">
+      <BrowserRouter basename="/sme_review">
         <Routes>
           <Route path="/" element={<LoginComponent />} />
           <Route
-            path="/prime-table"
+            path="/job_review"
             element={
               <>
                 <NavBar />
+                <DetailsPanel/>
                 <PrimeTable />
               </>
             }
           />
           <Route
-            path="/dashboard"
+            path="/job_details"
             element={
               <>
                 <NavBar />

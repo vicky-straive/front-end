@@ -16,7 +16,7 @@
     background: black !important;
 }
 .p-datatable .p-datatable-thead > tr > th {
-    background-color: #ff5000;
+    background-color: #3cc1ff;
     color: rgb(255, 255, 255);
     font-weight: 700;
     backdrop-filter: blur(8px);

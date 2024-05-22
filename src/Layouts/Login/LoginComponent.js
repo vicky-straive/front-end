@@ -99,7 +99,7 @@ function LoginComponent() {
         showSuccess(name);
         setIsLoginSuccessful(true);
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/job_details");
         }, 3000);
       } else {
         showErr("Login failed. Please check your credentials.");
@@ -144,7 +144,7 @@ function LoginComponent() {
         showSuccess(name);
         setIsLoginSuccessful(true);
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/job_details");
         }, 3000);
       } else {
         showErr(response?.data?.message);

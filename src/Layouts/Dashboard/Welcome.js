@@ -7,6 +7,7 @@ import { useLocalStorage, useSessionStorage  } from "primereact/hooks";
 import axios from "axios";
 import "./dash.css";
 import DetailsPanel from "../../components/Panel/DetailsPanel";
+import PrimeTable from "../../components/Table/PrimeTable";
 import { useNavigate } from "react-router-dom";
 
 
@@ -15,7 +16,7 @@ function Welcome() {
   const { SER_BASE_CONNECTION, BASE_TOKEN_CONNECTION } = API_CONSTANTS;
   const [token] = useSessionStorage("", "token")
 
-  console.log("local Sess", token);
+  // console.log("local Sess", token);
   const [selectedRow, setSelectedRow] = useState(null);
   const navigate = useNavigate();
 
@@ -96,6 +97,7 @@ function Welcome() {
         ))}
       </DataTable>
       {selectedRow && <DetailsPanel rowData={selectedRow} />}
+      {selectedRow && <PrimeTable rowData={selectedRow} />}
     </div>
   );
 }

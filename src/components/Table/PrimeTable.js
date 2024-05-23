@@ -167,9 +167,13 @@ export default function RowEditingDemo() {
 
   const checker = (rowData) => {
     const isRowEditing = rowData === rowEditorState;
+    const createdDate = moment(rowData.CREATED_DATE);
+    const modifiedDate = moment(rowData.MODIFIED_DATE);
+    const isDateModified = !createdDate.isSame(modifiedDate);
+  
     return (
       <div>
-        {!isRowEditing && rowData.inventoryStatus === "MODIFIED" && (
+        {!isRowEditing && isDateModified && (
           <i
             className="pi pi-check"
             style={{ color: "#0ac50a", position: "relative", right: "80px" }}

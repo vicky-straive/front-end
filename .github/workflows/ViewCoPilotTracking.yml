@@ -1,0 +1,26 @@
+name: CoPilot Usage Tracking
+
+on:
+  push:
+    branches:
+      - table
+
+jobs:
+  track-usage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run CoPilot usage script
+        run: python track_copilot_usage.py
+      
+      - name: Display CoPilot Metrics
+        run: |
+          cat copilot_metrics.json
+
+      - name: Upload CoPilot Metrics Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: copilot-metrics
+          path: copilot_metrics.json

@@ -1,0 +1,21 @@
+name: CoPilot Usage Tracking
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  track-usage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run CoPilot usage script
+        run: |
+          python track_copilot_usage.py
+
+      - name: Push metrics to monitoring tool
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d @copilot_metrics.json https://your-monitoring-tool/api/track

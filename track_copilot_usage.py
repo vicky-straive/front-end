@@ -1,3 +1,5 @@
+import json
+
 def fetch_suggestions_accepted(log_file_path='copilot_usage.log'):
     accepted_count = 0
     try:
@@ -42,6 +44,8 @@ def collect_copilot_metrics():
 
 if __name__ == "__main__":
     metrics = collect_copilot_metrics()
+    with open('copilot_metrics.json', 'w') as json_file:
+        json.dump(metrics, json_file)
     print("Copilot Usage Metrics:")
     print(f"Suggestions Accepted: {metrics['suggestions_accepted']}")
     print(f"Suggestions Rejected: {metrics['suggestions_rejected']}")

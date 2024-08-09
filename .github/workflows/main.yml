@@ -3,7 +3,7 @@ name: CoPilot Usage Tracking
 on:
   push:
     branches:
-      - table
+      - main
 
 jobs:
   track-usage:
@@ -13,10 +13,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run CoPilot usage script
+        run: python track_copilot_usage.py
+      
+      - name: Push metrics to monitoring tool
         run: |
-          python track_copilot_usage.py
-
-          - name: Push metrics to monitoring tool
-          run: |
-            curl -X POST -H "Content-Type: application/json" -d @copilot_metrics.json https://your-actual-monitoring-tool.com/api/track
-        
+          curl -X POST -H "Content-Type: application/json" -d @copilot_metrics.json https://your-actual-monitoring-tool.com/api/track

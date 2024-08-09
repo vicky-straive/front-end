@@ -1,3 +1,5 @@
+// view the pdf in a popup modal from prime react
+
 import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -7,18 +9,50 @@ import { Tag } from "primereact/tag";
 import { ProductService } from "../../Service/ProductService";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "./DataTable.css";
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 // import Modal from "../Modal/Modal";
 
 export default function RowEditingDemo() {
   const [products, setProducts] = useState(null);
   // const [statuses] = useState(["MODIFIED", "NOT MODIFIED"]);
-  const [isModalOpen, setIsModalOpen] = useState(false); 
-  const [selectedRow, setSelectedRow] = useState(null); 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const pdfUrls = [
+    "https://example.com/pdf1.pdf",
+    "https://example.com/pdf2.pdf",
+    "https://example.com/pdf3.pdf",
+    // Add more URLs as needed
+  ];
+
+  // Function to get a random PDF URL
+  const getRandomPdfUrl = () => {
+    const randomIndex = Math.floor(Math.random() * pdfUrls.length);
+    return pdfUrls[randomIndex];
+  };
+
+  // PDF Viewer function
+  const pdfViewer = () => {
+    const handleClick = () => {
+      const randomPdfUrl = getRandomPdfUrl();
+      window.open(randomPdfUrl, "_blank");
+      console.log("PDF URL:", randomPdfUrl);
+      // create 
+
+      
+    };
+
+    return (
+      <Button
+        icon="pi pi-file-pdf"
+        className="p-button-rounded p-button-info"
+        onClick={handleClick}
+      />
+    );
+  };
 
   useEffect(() => {
     ProductService.getProductsMini().then((data) => setProducts(data));
-  }, []); 
+  }, []);
 
   const allowEdit = (rowData) => {
     if (rowData) {
@@ -44,17 +78,17 @@ export default function RowEditingDemo() {
   const onRowEditComplete = (e) => {
     let _products = [...products];
     let { newData, index } = e;
-  
+
     // Compare the original content with the modified content
     if (_products[index].machineLanguage !== newData.machineLanguage) {
-      newData.inventoryStatus = "MODIFIED"; 
+      newData.inventoryStatus = "MODIFIED";
     } else {
-      newData.inventoryStatus = "NOT MODIFIED"; 
+      newData.inventoryStatus = "NOT MODIFIED";
     }
     _products[index] = newData;
     setProducts(_products);
   };
-  
+
   const textEditor = (options) => {
     return (
       <InputTextarea
@@ -74,12 +108,6 @@ export default function RowEditingDemo() {
       ></Tag>
     );
   };
-
-  const pdfViewer = (rowData) => {
-    return(
-      <div><PictureAsPdfIcon/></div>
-    )
-  }
 
   return (
     <div className="card p-fluid db-table">
@@ -114,7 +142,7 @@ export default function RowEditingDemo() {
           rowEditor={allowEdit}
           // body={modalTemplate}
           headerStyle={{ width: "10%", minWidth: "8rem" }}
-            bodyStyle={{ textAlign: "center" }}
+          bodyStyle={{ textAlign: "center" }}
         ></Column>
         <Column
           headerStyle={{ width: "10%", minWidth: "8rem" }}
@@ -123,11 +151,11 @@ export default function RowEditingDemo() {
           body={statusBodyTemplate}
           style={{ width: "0%" }}
         ></Column>
-         <Column
+        <Column
           header="PDF View"
           body={pdfViewer}
           headerStyle={{ width: "0%", minWidth: "8rem" }}
-            bodyStyle={{ textAlign: "center" }}
+          bodyStyle={{ textAlign: "center" }}
         ></Column>
       </DataTable>
     </div>

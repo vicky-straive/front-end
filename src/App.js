@@ -14,6 +14,7 @@ function App() {
   const handleLoginSuccess = (loginData) => {
     setLoggedInUser(loginData);
     // Navigate to prime-table on successful login (using history API)
+    console.log("loginData", loginData);
     if (loginData.status == true) {
       console.log("status", loginData.status);
       const history = window.history;

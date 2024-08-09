@@ -16,6 +16,7 @@ jobs:
         run: |
           python track_copilot_usage.py
 
-      - name: Push metrics to monitoring tool
-        run: |
-          curl -X POST -H "Content-Type: application/json" -d @copilot_metrics.json https://your-monitoring-tool/api/track
+          - name: Push metrics to monitoring tool
+          run: |
+            curl -X POST -H "Content-Type: application/json" -d @copilot_metrics.json https://your-actual-monitoring-tool.com/api/track
+        

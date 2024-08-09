@@ -15,6 +15,12 @@ jobs:
       - name: Run CoPilot usage script
         run: python track_copilot_usage.py
       
-      - name: Push metrics to monitoring tool
+      - name: Display CoPilot Metrics
         run: |
-          curl -X POST -H "Content-Type: application/json" -d @copilot_metrics.json https://your-actual-monitoring-tool.com/api/track
+          cat copilot_metrics.json
+
+      - name: Upload CoPilot Metrics Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: copilot-metrics
+          path: copilot_metrics.json

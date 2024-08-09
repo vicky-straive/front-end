@@ -27,7 +27,9 @@ const navigate = useNavigate();
 const goToNewPage = () => {
   // go to new page logic here
   console.log("Going to new page");
-  navigate('/prime-table');
+  navigate('/login');
+
+  // navigate('/prime-table');
 }
 
       const goToDashboardPage = () => {

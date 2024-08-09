@@ -10,6 +10,7 @@ import { ProductService } from "../../Service/ProductService";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
 import "./DataTable.css";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { Button } from "primereact/button";
 // import Modal from "../Modal/Modal";
 
 export default function RowEditingDemo() {

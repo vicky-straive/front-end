@@ -1,3 +1,4 @@
+import { Button } from 'primereact/button';
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 // create a table with three rows and mention them as Name Age and Gender
@@ -8,6 +9,12 @@ import { useNavigate } from 'react-router-dom';
       
 
 function Welcome() {
+// create a sum of 3 and multipy with 5
+    const sum = 3 + 5;
+    const product = sum * 5;
+    console.log(product);
+    
+
   const logout = () => {
     // Clear user authentication tokens or session data
     // For example, you can use localStorage or sessionStorage to store authentication tokens
@@ -59,7 +66,12 @@ const goToNewPage = () => {
         </tr>
       </table>
 
-      <button className="custom-button" onClick={logout}>Logout</button>
+      <h1>Welcome to the dashboard</h1>
+            <p>This is the dashboard page</p>
+            <p>The sum of 3 and 5 is {sum}</p>
+            <p>The product of 3 and 5 is {product}</p>
+
+      <Button className="custom-button" onClick={logout}>Logout</Button>
       <button className="custom-button" onClick={goToLoginPage}>Go back to login page</button>
       <button className="custom-button" onClick={goToNewPage}>Go back to prime table page</button>
       <button className="custom-button" onClick={goToDashboardPage}>Go back to dashboard page</button>

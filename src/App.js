@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import PrimeTable from "./components/Table/PrimeTable";
 import LoginComponent from "./components/LoginComponent";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Welcome from "./components/Welcome";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -27,11 +28,13 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route
+        <Route
             path="/"
             element={<LoginComponent onLoginSuccess={handleLoginSuccess} />}
           />
           <Route path="/prime-table" element={<PrimeTable />} />
+          <Route path="/dashboard" element={<Welcome />} />
+          
         </Routes>
       </BrowserRouter>
     </div>
